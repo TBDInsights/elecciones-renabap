@@ -24,7 +24,7 @@
 
     iframe {
       width: 100%;
-      height: 600px;
+      height: 650px;
       border: none;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       border-radius: 8px;
@@ -86,7 +86,7 @@
 
     .accordion-content.open {
       padding: 15px;
-      max-height: 300px;
+      max-height: 4000px;
     }
 
     body.dark-mode .accordion-header {
@@ -109,7 +109,7 @@
     <iframe src="mapa_circuitos_caba_renabap.html"></iframe>
 
     <div class="accordion">
-      <div class="accordion-header" onclick="toggleAccordion()">📘 Metodología</div>
+      <div class="accordion-header" onclick="toggleAccordion('accordion-content')">📘 Metodología</div>
       <div class="accordion-content" id="accordion-content">
         <p>Para determinar que circuitos electorales contienen barrios RENABAP se utilizaron los poligonos geograficos que delimitan los circuitos electorales y los poligonos que delimitan los barrios Renabap ambos obtenidos de fuentes oficiales y se implemento un inner join espacial. </p>
         <p> El autor se tomo las siguientes atribuciones para confeccionar el analisis:</p>
@@ -118,11 +118,12 @@
         Esto es para solo considerar resultados donde la poblacion de los asentamientos puede influir significativamente en el total.  </p>
       <p> (!) Una mejor alternativa seria asignar un numero de adultos promedio por familia y calcular la poblacion de los asentamientos vs votantes.
     Con este dato se podria definir un umbral en proporcion de votantes estimados para filtrar circuitos. Tal vez se implemente en una v2.0 del analisis. </p>
+        <p><strong>Herramientas:</strong> GeoPandas, Plotly, openStreetMap, shapely</p>
       </div>
     </div>
 
     <div class="accordion">
-      <div class="accordion-header" onclick="toggleAccordion2()">🔗 Fuentes </div>
+      <div class="accordion-header" onclick="toggleAccordion('accordion-fuentes')">🔗 Fuentes </div>
       <div class="accordion-content" id="accordion-fuentes">
         <p> Circuitos electorales: <a href="https://data.buenosaires.gob.ar/dataset/circuitos-electorales">https://data.buenosaires.gob.ar/dataset/circuitos-electorales</a></p>
         <p> Barrios RENABAP: <a href="https://mapa.poblaciones.org/map/191801/#/@-34.653714,-58.453102,11z&r11898/l=280001!v1!w0,0,0,0,0;265801!v1!w0,0,0,0">  https://mapa.poblaciones.org/map/191801/#/@-34.653714,-58.453102,11z&r11898/l=280001!v1!w0,0,0,0,0;265801!v1!w0,0,0,0</a></p>
@@ -132,6 +133,53 @@
 
     <h2>Distribución Total</h2>
     <iframe src="piechart_circuitos_caba_renabap.html"></iframe>
+
+    <h2>Vista por Villa y Establecimiento</h2>
+    <p>Destacamos la 🔗<a href="https://www.lanacion.com.ar/politica/balotaje-chequea-el-resultado-en-la-escuela-donde-votaste-nid23112023/">visualización</a> elaborada por el equipo de La Nación por su detalle granular de resultados por establecimiento electoral.
+    </p>
+
+    <div class="accordion">
+     <div class="accordion-header" onclick="toggleAccordion('accordion-31')">Villa 31 - Padre Mugica </div>
+       <div class="accordion-content open" id="accordion-31">
+       <img src="img/villa_31.png" alt="Villa 31" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+       </div>
+    </div>
+
+    <div class="accordion">
+     <div class="accordion-header" onclick="toggleAccordion('accordion-11114')">Villa 1-11-14</div>
+       <div class="accordion-content" id="accordion-11114">
+         <img src="img/villa-1-11-14.png" alt="Villa 1-11-14" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+       </div>
+    </div>
+
+    <div class="accordion">
+     <div class="accordion-header" onclick="toggleAccordion('accordion-2124')">Villa 21-24</div>
+       <div class="accordion-content" id="accordion-2124">
+         <img src="img/villa_21_24.png" alt="Villa 21-24" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+       </div>
+    </div>
+
+    <div class="accordion">
+     <div class="accordion-header" onclick="toggleAccordion('accordion-20')">Villa 20</div>
+       <div class="accordion-content" id="accordion-20">
+         <img src="img/villa_20.png" alt="Villa 20" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+       </div>
+    </div>
+
+    <div class="accordion">
+     <div class="accordion-header" onclick="toggleAccordion('accordion-15')">Villa 15 - Ciudad Oculta</div>
+       <div class="accordion-content" id="accordion-15">
+         <img src="img/villa_15_ciudad_oculta.png" alt="Villa 15" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+       </div>
+    </div>
+
+    <div class="accordion">
+     <div class="accordion-header" onclick="toggleAccordion('accordion-3')">Villa 3 - Fatima - Ciudad Oculta</div>
+       <div class="accordion-content" id="accordion-3">
+         <img src="img/fatima_villa_3.png" alt="Villa 15" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+       </div>
+    </div>
+
   </div>
 
   <script>
@@ -139,14 +187,11 @@
       document.body.classList.toggle('dark-mode');
     }
 
-    function toggleAccordion() {
-      const content = document.getElementById('accordion-content');
+    function toggleAccordion(element_id) {
+      const content = document.getElementById(element_id);
       content.classList.toggle('open');
     }
-    function toggleAccordion2() {
-      const content = document.getElementById('accordion-fuentes');
-      content.classList.toggle('open');
-    }
+
   </script>
 </body>
 </html>
